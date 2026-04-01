@@ -5,11 +5,12 @@ import {
   addToFavourite,
   removeFromFavourite,
 } from "../controllers/favourite.controller.js";
+import { authorizeRoles } from "../middleware/role.middleware.js";
 
 const router = express.Router();
 router.use(authMiddleware);
 router.get("/", listFavourites);
-router.post("/", addToFavourite);
-router.delete("/:propertyId", removeFromFavourite);
+router.post("/", authorizeRoles("buyer"), addToFavourite);
+router.delete("/:propertyId", authorizeRoles("buyer"), removeFromFavourite);
 
 export default router;
