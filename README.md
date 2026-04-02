@@ -30,12 +30,6 @@ cd backend
 npm install
 ```
 
-Copy the example env file and fill in your values:
-
-```bash
-cp .env.example .env
-```
-
 Add `.env` file and add your values (see `.env.example` for reference):
 
 ```
@@ -66,12 +60,6 @@ Open a new terminal:
 ```bash
 cd frontend
 npm install
-```
-
-Copy the example env file and fill in your values:
-
-```bash
-cp .env.example .env
 ```
 
 Add `.env` file and add your values (see `.env.example` for reference):
