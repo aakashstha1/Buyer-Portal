@@ -11,7 +11,7 @@ function Navbar() {
 
   const handleLogout = () => {
     logout();
-    navigate("/login");
+    navigate("/", { replace: true });
   };
 
   if (loading) return null;
@@ -26,7 +26,10 @@ function Navbar() {
 
       {/* Right: Auth buttons or Avatar */}
       <div>
-        {!user ? (
+        {loading ? (
+          // small skeleton instead of returning null
+          <div className="w-10 h-10 rounded-full bg-gray-200 animate-pulse" />
+        ) : !user ? (
           <div className="flex space-x-4">
             <Link
               to="/login"
@@ -47,7 +50,7 @@ function Navbar() {
               className="w-10 h-10 rounded-full cursor-pointer bg-gray-500 flex items-center justify-center text-white font-bold text-lg border-2 border-white outline-2 outline-blue-500"
               onClick={() => setDropdownOpen(!dropdownOpen)}
             >
-              {user?.name.charAt(0).toUpperCase() || "U"}
+              {user?.name ? user?.name.charAt(0).toUpperCase() : "U"}
             </div>
             {dropdownOpen && (
               <div className="absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg p-2 z-50">

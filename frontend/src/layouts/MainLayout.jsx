@@ -1,22 +1,15 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { Navigate, Outlet, useNavigate } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import Loader from "../components/Loader";
 
 function MainLayout() {
   const { user, loading } = useAuth();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!loading && user) {
-      navigate("/dashboard", { replace: true });
-    }
-  }, [user, loading, navigate]);
 
   if (loading) return <Loader />;
-  if (!user) return <Navigate to="/login" replace />;
+  if (user) return <Navigate to="/dashboard" replace />;
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />

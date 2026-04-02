@@ -20,6 +20,7 @@ function LoginPage() {
     const { isValid, errors } = validateLogin({ email, password });
     if (!isValid) {
       setErrors(errors);
+      toast.error(Object.values(errors)[0]);
       return;
     }
     setErrors({});
@@ -28,7 +29,6 @@ function LoginPage() {
       await loginAPI(email, password);
       const data = await getMe();
       login(data);
-      console.log(data);
       toast.success(`Welcome back! ${data?.data?.name}`);
       navigate("/dashboard", { replace: true });
     } catch (err) {
@@ -50,14 +50,20 @@ function LoginPage() {
           <Input
             type="email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              setErrors((prev) => ({ ...prev, email: "" }));
+            }}
             placeholder="Email"
             error={errors.email}
           />
           <Input
             type="password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => {
+              setPassword(e.target.value);
+              setErrors((prev) => ({ ...prev, password: "" }));
+            }}
             placeholder="Password"
             error={errors.password}
           />

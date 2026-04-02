@@ -1,7 +1,9 @@
 // components/FormInput.jsx
 import React from "react";
+// import { toast } from "react-toastify";
 
 const Input = ({ label, type, value, onChange, placeholder, error }) => {
+  // toast.error(error);
   return (
     <div>
       {label && <label className="block text-gray-700 mb-1">{label}</label>}
@@ -14,7 +16,7 @@ const Input = ({ label, type, value, onChange, placeholder, error }) => {
           error ? "border-red-500" : "border-gray-300"
         }`}
       />
-      {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
+      {/* {error && <p className="text-red-500 text-sm mt-1">{error}</p>} */}
     </div>
   );
 };

@@ -22,10 +22,12 @@ export const AuthProvider = ({ children }) => {
     checkAuth();
   }, []);
 
+  // --------------------------------- Login ---------------------------------
   const login = (userData) => {
     setUser(userData);
   };
 
+  // --------------------------------- Logout ---------------------------------
   const logout = async () => {
     try {
       await logoutAPI();

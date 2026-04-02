@@ -3,13 +3,14 @@ import { Navigate, Outlet } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
 import { useAuth } from "../hooks/useAuth";
+import Loader from "../components/Loader";
 
 function DashboardLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const { user, loading } = useAuth();
 
-  if (loading) return <div>Loading...</div>;
-  if (!user) return <Navigate to="/login" replace />;
+  if (loading) return <Loader />;
+  if (!user) return <Navigate to="/" replace />;
 
   return (
     <div className="flex h-screen overflow-hidden">

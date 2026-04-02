@@ -23,7 +23,7 @@ function UserCard() {
       </div>
 
       {/* Divider */}
-      <div className="h-px bg-gray-100 mb-4" />
+      <div className="h-px bg-gray-200 mb-4" />
 
       {/* Info Row */}
       <div className="flex items-center gap-6">
@@ -33,7 +33,7 @@ function UserCard() {
           <p className="text-sm font-semibold text-gray-800">{user?.name}</p>
         </div>
 
-        <div className="h-8 w-px bg-gray-100" />
+        <div className="h-8 w-px bg-gray-200" />
 
         <div className="flex items-center gap-2">
           <Mail size={16} className="text-gray-400" />
@@ -41,7 +41,7 @@ function UserCard() {
           <p className="text-sm font-semibold text-gray-800">{user?.email}</p>
         </div>
 
-        <div className="h-8 w-px bg-gray-100" />
+        <div className="h-8 w-px bg-gray-200" />
 
         <div className="flex items-center gap-2">
           <Shield size={16} className="text-indigo-400" />
