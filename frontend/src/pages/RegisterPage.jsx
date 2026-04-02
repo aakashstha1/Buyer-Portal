@@ -5,11 +5,13 @@ import { validateRegistration } from "../utils/validator";
 import { register as registerApi } from "../services/authService";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { Eye, EyeOff, ArrowLeft } from "lucide-react";
 
 function RegisterPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -25,8 +27,7 @@ function RegisterPage() {
     setErrors({});
     setLoading(true);
     try {
-      const data = await registerApi(name, email, password);
-      console.log(data);
+      await registerApi(name, email, password);
       toast.success("Account created successfully!");
       navigate("/login", { replace: true });
     } catch (err) {
@@ -44,6 +45,7 @@ function RegisterPage() {
         <h1 className="text-3xl font-bold text-center text-indigo-600 mb-6">
           Register
         </h1>
+
         <form onSubmit={handleSubmit} className="space-y-4">
           <Input
             type="text"
@@ -65,26 +67,48 @@ function RegisterPage() {
             placeholder="Email"
             error={errors.email}
           />
-          <Input
-            type="password"
-            value={password}
-            onChange={(e) => {
-              setPassword(e.target.value);
-              setErrors((prev) => ({ ...prev, password: "" }));
-            }}
-            placeholder="Password"
-            error={errors.password}
-          />
+
+          {/* Password with toggle */}
+          <div className="relative">
+            <Input
+              type={showPassword ? "text" : "password"}
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                setErrors((prev) => ({ ...prev, password: "" }));
+              }}
+              placeholder="Password"
+              error={errors.password}
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-3 top-2.5 text-gray-400 hover:text-gray-600 transition"
+            >
+              {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+            </button>
+          </div>
+
           <Button type="submit" disabled={loading}>
             {loading ? "Creating account..." : "Register"}
           </Button>
         </form>
+
         <p className="text-center text-gray-500 mt-4">
           Already have an account?{" "}
           <Link to="/login" className="text-indigo-600 hover:underline">
             Login
           </Link>
         </p>
+
+        {/* Back button */}
+        <Link
+          to="/"
+          className="flex items-center pt-5 justify-center gap-1 text-sm text-gray-400 hover:text-gray-600 transition"
+        >
+          <ArrowLeft size={16} />
+          Back to home
+        </Link>
       </div>
     </div>
   );

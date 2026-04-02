@@ -1,0 +1,105 @@
+# Buyer Portal
+
+A full-stack real-estate buyer portal with authentication and favourites management.
+
+## Prerequisites
+
+Make sure you have **Node.js v18 or higher** installed.
+
+Check if Node.js is installed:
+
+```bash
+node -v
+```
+
+If not installed, download it from https://nodejs.org and install the LTS version.
+
+## Getting Started
+
+### 1. Clone the repository
+
+```bash
+git clone <your-repo-url>
+cd buyer-portal
+```
+
+### 2. Backend Setup
+
+```bash
+cd backend
+npm install
+```
+
+Copy the example env file and fill in your values:
+
+```bash
+cp .env.example .env
+```
+
+Add `.env` file and add your values (see `.env.example` for reference):
+
+```
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_secret_key
+JWT_EXPIRES_IN=expire_time_in_seconds
+FRONTEND_URL=http://localhost:5173
+NODE_ENV=development
+PORT=3000
+```
+
+Seed the database with sample properties:
+
+```bash
+npm run seed
+```
+
+Start the backend server:
+
+```bash
+npm run dev
+```
+
+### 3. Frontend Setup
+
+Open a new terminal:
+
+```bash
+cd frontend
+npm install
+```
+
+Copy the example env file and fill in your values:
+
+```bash
+cp .env.example .env
+```
+
+Add `.env` file and add your values (see `.env.example` for reference):
+
+```
+VITE_API_URL=http://localhost:3000/api
+```
+
+Start the frontend:
+
+```bash
+npm run dev
+```
+
+### 4. Open the app
+
+Go to http://localhost:5173 in your browser.
+
+## Example Flow
+
+1. **Register** — click "Get Started" on the landing page → fill in name, email, password
+2. **Login** — use your credentials → redirected to dashboard
+3. **Browse properties** — click the heart icon on any property to add to favourites
+4. **View favourites** — go to "My Favourites" in the sidebar to see saved properties
+5. **Remove favourite** — click the X button on any favourited property
+6. **Logout** — click your avatar in the navbar → Logout → redirected to landing page
+
+## Tech Stack
+
+- **Frontend** — React, React Router, Tailwind CSS, Axios, React Toastify
+- **Backend** — Node.js, Express, MongoDB, Mongoose, JWT, bcryptjs

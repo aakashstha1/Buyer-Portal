@@ -16,7 +16,7 @@ function Navbar() {
 
   if (loading) return null;
   return (
-    <nav className="bg-white shadow-md px-6 py-3 flex items-center justify-between">
+    <nav className="bg-white shadow-lg px-6 py-3 flex items-center justify-between z-100">
       {/* Left: Logo */}
       <div>
         <Link to="/" className="text-2xl font-bold text-indigo-600">

@@ -2,9 +2,8 @@ import React from "react";
 
 function Footer() {
   return (
-    <footer className="bg-gray-100 py-4 text-center text-gray-600">
-      &copy; {new Date().getFullYear()} My Real Estate Portal. All rights
-      reserved.
+    <footer className="bg-white border-t border-gray-100 py-6 text-center text-sm text-gray-400">
+      &copy; {new Date().getFullYear()} RealEstate. All rights reserved.
     </footer>
   );
 }

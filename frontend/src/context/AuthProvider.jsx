@@ -10,10 +10,10 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const res = await getMe(); // cookie sent automatically
+        const res = await getMe(); 
         setUser(res.data);
       } catch {
-        setUser(null); // cookie expired or invalid
+        setUser(null); 
       } finally {
         setLoading(false);
       }

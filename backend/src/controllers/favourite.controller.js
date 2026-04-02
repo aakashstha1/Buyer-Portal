@@ -3,6 +3,7 @@ import {
   getFavourites,
   addFavourite,
   removeFavourite,
+  getFavouriteIdService,
 } from "../services/favourite.service.js";
 
 // ----------------------------------------------- List Favourites -----------------------------------------------
@@ -37,6 +38,15 @@ export const removeFromFavourite = async (req, res, next) => {
   try {
     await removeFavourite(req.user._id, req.params.propertyId);
     res.json({ message: "Removed" });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const getFavouriteIds = async (req, res, next) => {
+  try {
+    const ids = await getFavouriteIdService(req.user._id);
+    res.json({ ids });
   } catch (err) {
     next(err);
   }

@@ -14,7 +14,6 @@ function FavouritesList() {
   const perPage = 5;
   const [loading, setLoading] = useState(false);
 
-  // Fetch favourites
   const fetchFavourites = async (pageToFetch = page) => {
     try {
       setLoading(true);
@@ -28,7 +27,6 @@ function FavouritesList() {
     }
   };
 
-  // Fetch favourites on initial mount and whenever page changes
   useEffect(() => {
     fetchFavourites();
   }, [page]);
@@ -38,11 +36,9 @@ function FavouritesList() {
       await removeFromFavourites(propertyId);
       toast.success("Removed from favourites");
 
-      // If last item on page removed, go back a page
       const isLastItemOnPage = favourites.length === 1 && page > 1;
       const newPage = isLastItemOnPage ? page - 1 : page;
 
-      // Fetch updated favourites for correct page
       fetchFavourites(newPage);
     } catch (err) {
       console.error(err);

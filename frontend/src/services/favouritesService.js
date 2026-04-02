@@ -18,3 +18,8 @@ export const removeFromFavourites = async (propertyId) => {
   const { data } = await api.delete(`/favourites/${propertyId}`);
   return data;
 };
+
+export const getFavouriteIds = async () => {
+  const { data } = await api.get("/favourites/ids");
+  return data.ids;
+};

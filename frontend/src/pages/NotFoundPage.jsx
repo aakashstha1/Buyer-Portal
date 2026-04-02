@@ -11,7 +11,7 @@ function NotFoundPage() {
           Oops! The page you are looking for does not exist.
         </p>
         <button
-          onClick={() => navigate(-1)}
+          onClick={() => navigate("/")}
           className="px-6 py-3 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 transition"
         >
           Go Back

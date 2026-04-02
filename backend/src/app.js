@@ -5,6 +5,7 @@ import authRoutes from "./routes/auth.routes.js";
 import favouriteRoutes from "./routes/favourite.routes.js";
 import userRoutes from "./routes/user.routes.js";
 import propertyRoutes from "./routes/property.routes.js";
+import { errorHandler } from "./middleware/errorHandler.js";
 
 const app = express();
 
@@ -19,14 +20,16 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
+app.get("/", (req, res) => {
+  res.send("API is Working");
+});
+
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/favourites", favouriteRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/properties", propertyRoutes);
 
-app.get("/", (req, res) => {
-  res.send("API is Working");
-});
+app.use(errorHandler);
 
 export default app;

@@ -49,3 +49,8 @@ export const removeFavourite = async (userId, propertyId) => {
   if (!favourite) throw new AppError("Favourite not found", 404);
   return favourite;
 };
+
+export const getFavouriteIdService = async (userId) => {
+  const favourites = await Favourite.find({ user: userId }).select("property");
+  return favourites.map((f) => f.property.toString());
+};
