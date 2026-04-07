@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useCallback } from "react";
 import PropertyCard from "./ui/PropertyCard";
 import { useState, useEffect } from "react";
-import { getProperties } from "../services/propertyService";
+import {
+  getProperties,
+  getSearchedProperties,
+} from "../services/propertyService";
 import Loader from "./Loader";
 import {
   addToFavourites,
@@ -9,6 +12,7 @@ import {
   removeFromFavourites,
 } from "../services/favouritesService";
 import { toast } from "react-toastify";
+import Searchbar from "./Searchbar";
 
 function PropertiesList() {
   const [properties, setProperties] = useState([]);
@@ -16,6 +20,7 @@ function PropertiesList() {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const perPage = 5;
+  const [searchKeyword, setSearchKeyword] = useState("");
   const [loading, setLoading] = useState(false);
 
   // fetch all favourite property ids once
@@ -33,13 +38,16 @@ function PropertiesList() {
     fetchFavouriteIds();
   }, []);
 
+  // fetch properties on page or search change
   useEffect(() => {
     const fetchProperties = async () => {
       try {
         setLoading(true);
-        const res = await getProperties(page, perPage);
+        const res = searchKeyword
+          ? await getSearchedProperties(searchKeyword, page, perPage)
+          : await getProperties(page, perPage);
         setProperties(res.data);
-        setTotalPages(res.pagination.totalPages);
+        setTotalPages(res.pagination?.totalPages ?? 1);
       } catch (err) {
         console.error(err);
       } finally {
@@ -47,7 +55,12 @@ function PropertiesList() {
       }
     };
     fetchProperties();
-  }, [page]);
+  }, [page, searchKeyword]);
+
+  const handleSearch = useCallback((value) => {
+    setSearchKeyword(value);
+    setPage(1); // reset to page 1 on new search
+  }, []);
 
   const handleLike = async (propertyId, liked) => {
     try {
@@ -69,11 +82,13 @@ function PropertiesList() {
   };
 
   return (
-    <div>
+    <div className="w-full bg-white p-2  rounded-xl shadow-md">
       <div className="flex items-center p-3 gap-3">
         <span className="w-1 h-7 bg-amber-500 rounded-sm"></span>
         <h1 className="text-2xl font-bold text-gray-800">Properties List</h1>
       </div>
+
+      <Searchbar onSearch={handleSearch} />
 
       {loading ? (
         <Loader />
