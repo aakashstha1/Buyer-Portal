@@ -1,21 +1,26 @@
 import Property from "../models/property.model.js";
+import { getOrSetCache } from "../utils/cache.js";
 
 export const getAllProperties = async (page = 1, limit = 5) => {
-  const skip = (page - 1) * limit;
-  const [properties, total] = await Promise.all([
-    Property.find().skip(skip).limit(limit).sort({ createdAt: -1 }),
-    Property.countDocuments(),
-  ]);
+  const cacheKey = `properties:${page}:${limit}`;
 
-  return {
-    data: properties,
-    pagination: {
-      total,
-      page,
-      limit,
-      totalPages: Math.ceil(total / limit),
-    },
-  };
+  return await getOrSetCache(cacheKey, async () => {
+    const skip = (page - 1) * limit;
+    const [properties, total] = await Promise.all([
+      Property.find().skip(skip).limit(limit).sort({ createdAt: -1 }),
+      Property.countDocuments(),
+    ]);
+
+    return {
+      data: properties,
+      pagination: {
+        total,
+        page,
+        limit,
+        totalPages: Math.ceil(total / limit),
+      },
+    };
+  });
 };
 
 export const getSearchedProperty = async ({ keyword, page = 1, limit = 5 }) => {
@@ -25,26 +30,30 @@ export const getSearchedProperty = async ({ keyword, page = 1, limit = 5 }) => {
       pagination: { total: 0, page: 1, limit, totalPages: 1 },
     };
 
-  const skip = (page - 1) * limit;
-  const query = {
-    $or: [
-      { title: { $regex: keyword, $options: "i" } },
-      { location: { $regex: keyword, $options: "i" } },
-    ],
-  };
+  const cacheKey = `properties:search:${keyword}:${page}:${limit}`;
 
-  const [properties, total] = await Promise.all([
-    Property.find(query).skip(skip).limit(limit).sort({ createdAt: -1 }),
-    Property.countDocuments(query),
-  ]);
+  return await getOrSetCache(cacheKey, async () => {
+    const skip = (page - 1) * limit;
+    const query = {
+      $or: [
+        { title: { $regex: keyword, $options: "i" } },
+        { location: { $regex: keyword, $options: "i" } },
+      ],
+    };
 
-  return {
-    data: properties,
-    pagination: {
-      total,
-      page,
-      limit,
-      totalPages: Math.ceil(total / limit),
-    },
-  };
+    const [properties, total] = await Promise.all([
+      Property.find(query).skip(skip).limit(limit).sort({ createdAt: -1 }),
+      Property.countDocuments(query),
+    ]);
+
+    return {
+      data: properties,
+      pagination: {
+        total,
+        page,
+        limit,
+        totalPages: Math.ceil(total / limit),
+      },
+    };
+  });
 };
