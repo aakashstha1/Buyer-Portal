@@ -23,7 +23,25 @@ git clone <your-repo-url>
 cd buyer-portal
 ```
 
-### 2. Backend Setup
+### 2. Docker Setup (Redis)
+
+This project uses Redis for caching.
+
+#### 1. Pull and run Redis container
+
+Run Redis using Docker:
+
+```bash
+docker run -d --name redis -p 6379:6379 redis/redis-stack-server:latest
+```
+
+#### 2. Verify Redis is running
+
+```bash
+docker ps
+```
+
+### 3. Backend Setup
 
 ```bash
 cd backend
@@ -53,7 +71,7 @@ Start the backend server:
 npm run dev
 ```
 
-### 3. Frontend Setup
+### 4. Frontend Setup
 
 Open a new terminal:
 
@@ -74,7 +92,7 @@ Start the frontend:
 npm run dev
 ```
 
-### 4. Open the app
+### 5. Open the app
 
 Go to http://localhost:5173 in your browser.
 
