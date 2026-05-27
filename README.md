@@ -27,7 +27,7 @@ cd buyer-portal
 
 This project uses Redis for caching.
 
-#### 1. Pull and run Redis container
+#### i. Pull and run Redis container
 
 Run Redis using Docker:
 
@@ -35,7 +35,7 @@ Run Redis using Docker:
 docker run -d --name redis -p 6379:6379 redis/redis-stack-server:latest
 ```
 
-#### 2. Verify Redis is running
+#### ii. Verify Redis is running
 
 ```bash
 docker ps
@@ -57,6 +57,8 @@ JWT_EXPIRES_IN=expire_time_in_seconds
 FRONTEND_URL=http://localhost:5173
 NODE_ENV=development
 PORT=3000
+REDIS_URL=redis://localhost:6379
+
 ```
 
 Seed the database with sample properties:
